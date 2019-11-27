@@ -1,7 +1,8 @@
 import React from "react";
 
 interface NumberPickerProps {
-  initialCounter: number;
+  initialCounter?: number;
+  onIncrement?: (newValue: number) => void;
 }
 
 interface NumberPickerState {
@@ -12,7 +13,7 @@ export class NumberPicker extends React.Component<NumberPickerProps, NumberPicke
   constructor(props) {
     super(props);
     this.state = {
-      counter: this.props.initialCounter
+      counter: this.props.initialCounter || 0
     };
     this.incrementCounter = this.incrementCounter.bind(this);
     this.decrementCounter = this.decrementCounter.bind(this);
@@ -30,6 +31,9 @@ export class NumberPicker extends React.Component<NumberPickerProps, NumberPicke
 
   incrementCounter() {
     this.updateCounter(1);
+    if (this.props.onIncrement) {
+      this.props.onIncrement(this.state.counter);
+    }
   }
 
   render() {
