@@ -1,46 +1,26 @@
-import React from "react";
+import React, { FC, useState } from "react";
 
 interface NumberPickerProps {
   initialCounter?: number;
   onIncrement?: (newValue: number) => void;
 }
 
-interface NumberPickerState {
-  counter: number;
-}
+export const NumberPicker: FC<NumberPickerProps> = (props) => {
+  const [counter, setCounter] = useState(props.initialCounter || 0);
 
-export class NumberPicker extends React.Component<NumberPickerProps, NumberPickerState> {
-  constructor(props) {
-    super(props);
-    this.state = {
-      counter: this.props.initialCounter || 0
-    };
-    this.incrementCounter = this.incrementCounter.bind(this);
-    this.decrementCounter = this.decrementCounter.bind(this);
-  }
-
-  updateCounter(delta: number) {
-    this.setState({
-      counter: this.state.counter + delta
-    });
-  }
-
-  decrementCounter() {
-    this.updateCounter(-1);
-  }
-
-  incrementCounter() {
-    this.updateCounter(1);
-    if (this.props.onIncrement) {
-      this.props.onIncrement(this.state.counter);
+  const updateCounter = (delta: number) => setCounter(counter + delta);
+  const incrementCounter = () => {
+    const newCounter = counter + 1;
+    setCounter(newCounter);
+    if (props.onIncrement) {
+      props.onIncrement(newCounter);
     }
-  }
+  };
 
-  render() {
-    return <div>
-      <button onClick={this.incrementCounter}>+</button>
-      <h1>{this.state.counter}</h1>
-      <button onClick={this.decrementCounter}>-</button>
-    </div>
-  }
-}
+  const decrementCounter = () => updateCounter(-1);
+  return <div>
+    <button onClick={incrementCounter}>+</button>
+    <h1>{counter}</h1>
+    <button onClick={decrementCounter}>-</button>
+  </div>
+};

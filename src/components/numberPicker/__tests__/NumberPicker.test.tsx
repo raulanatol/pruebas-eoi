@@ -51,7 +51,8 @@ describe("NumberPicker", () => {
 
     test('se debería llamar a la función onIncrement cuando se aprete el botón + con valor 24', () => {
       const spy = jest.fn();
-      const wrapper = shallow(<NumberPicker initialCounter={23} onIncrement={spy}/>);
+      const wrapper = shallow(<NumberPicker initialCounter={23}
+                                            onIncrement={spy}/>);
       wrapper.find('button').at(0).simulate('click');
       expect(spy).toBeCalledWith(24);
     });

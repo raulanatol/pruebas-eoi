@@ -1,11 +1,19 @@
-import React from 'react';
+import React, { useEffect, useState } from "react";
 
-interface HelloProps {
-  name: string;
-}
+export const Hello = () => {
+  const [width, setWidth] = useState(window.innerWidth);
+  const [id, setId] = useState(Math.random());
 
-export class Hello extends React.Component<HelloProps, {}> {
-  render() {
-    return <h1>Hello {this.props.name}</h1>;
-  }
-}
+  const changeId = () => setId(Math.random());
+
+  useEffect(() => {
+    const onResize = () => {
+      console.log(id);
+      setWidth(window.innerWidth);
+    };
+    console.log('💥');
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, [id]);
+  return <h1 onClick={changeId}>Hello Juan</h1>;
+};
