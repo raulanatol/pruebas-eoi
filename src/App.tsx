@@ -1,6 +1,10 @@
 import React from 'react';
 import './App.css';
-import { Sidebar } from "./components/sideBar/Sidebar";
+import { createStore } from 'redux';
+import { reducer } from "./reducers";
+import Header from "./components/header/Header";
+import { Provider } from "react-redux";
+import Home from "./components/home/Home";
 
 type Page = 'Login' | 'Home';
 
@@ -10,6 +14,7 @@ interface AppState {
   username?: string;
 }
 
+const store = createStore(reducer);
 
 class App extends React.Component<{}, AppState> {
   constructor(props) {
@@ -33,21 +38,39 @@ class App extends React.Component<{}, AppState> {
   }
 
   render() {
-    return <Sidebar/>;
+    // return <Sidebar/>;
     // if (this.state.page === 'Login') {
-    //   return <Container><Login onLoginSuccess={this.loginOk}/></Container>
+    //   return <div>
+    {/*<Login onLoginSuccess={this.loginOk}/>*/
+    }
+    {/*<Footer/>*/
+    }
+    // </div>
     // }
 
-    // return <Home onLogout={this.doLogout} name={this.state.username}/>;
+    return <Provider store={store}>
+      <div>
+        <Header/>
+        <Home/>
+        {/*<Icon name="dashboard"/>*/}
+        {/*<Home onLogout={this.doLogout} name={this.state.username}/>*/}
+        {/*<Footer/>*/}
+      </div>
+    </Provider>;
   }
 }
 
+//
+// const Footer = () => {
+//   return <div>Soy el footer</div>;
+// };
+//
 // const Home = ({ name, onLogout }) => {
 //   return <div>
 //     <h1>Welcome {name}</h1>
 //     <button onClick={onLogout}>exit</button>
 //   </div>
 // };
-//
+
 
 export default App;
